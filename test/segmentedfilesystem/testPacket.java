@@ -32,6 +32,22 @@ public class testPacket {
     buffer[4] = 10;
     DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer);
     assertTrue(dataPacket.isDataPacket);
+    assertFalse(dataPacket.isLastPacket);
+    assertEquals(17,dataPacket.fileID);
+    assertEquals(42*256+1,dataPacket.packetNumber);
+  }
+
+  @Test
+  public void lastDataPacket(){
+    byte[] buffer = new byte[5];
+    buffer[0] = 3;
+    buffer[1]= 17;
+    buffer[2] = 42;
+    buffer[3] = 1;
+    buffer[4] = 10;
+    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer);
+    assertTrue(dataPacket.isDataPacket);
+    assertTrue(dataPacket.isLastPacket);
     assertEquals(17,dataPacket.fileID);
     assertEquals(42*256+1,dataPacket.packetNumber);
   }

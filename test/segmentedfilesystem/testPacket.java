@@ -17,7 +17,7 @@ public class testPacket {
     buffer[0] = 0;
     buffer[1]= 17;
     buffer[2] = 42;
-    Packet headerPacket = Packet.makePacket(buffer);
+    Packet headerPacket = Packet.makePacket(buffer,buffer.length);
     assertFalse(headerPacket.isDataPacket);
     assertEquals(17,headerPacket.fileID);
   }
@@ -30,7 +30,7 @@ public class testPacket {
     buffer[2] = 42;
     buffer[3] = 1;
     buffer[4] = 10;
-    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer);
+    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer,buffer.length);
     assertTrue(dataPacket.isDataPacket);
     assertFalse(dataPacket.isLastPacket);
     assertEquals(17,dataPacket.fileID);
@@ -45,7 +45,7 @@ public class testPacket {
     buffer[2] = 42;
     buffer[3] = 1;
     buffer[4] = 10;
-    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer);
+    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer,buffer.length);
     assertTrue(dataPacket.isDataPacket);
     assertTrue(dataPacket.isLastPacket);
     assertEquals(17,dataPacket.fileID);
@@ -71,7 +71,7 @@ public class testPacket {
     for (int i = 0; i <buffer.size() ; i++) {
       byteArr[i]=(byte) buffer.get(i);
     }
-    DataPacket dataPacket = (DataPacket) Packet.makePacket(byteArr);
+    DataPacket dataPacket = (DataPacket) Packet.makePacket(byteArr,byteArr.length);
     assertTrue(dataPacket.isDataPacket);
     assertEquals(17,dataPacket.fileID);
     assertEquals(1,dataPacket.packetNumber);
@@ -93,7 +93,7 @@ public class testPacket {
     for (int i = 0; i <buffer.size() ; i++) {
       byteArr[i]=(byte) buffer.get(i);
     }
-    HeaderPacket headerPacket = (HeaderPacket) Packet.makePacket(byteArr);
+    HeaderPacket headerPacket = (HeaderPacket) Packet.makePacket(byteArr,byteArr.length);
     assertFalse(headerPacket.isDataPacket);
     assertEquals(17,headerPacket.fileID);
     assertEquals("frogsord.txt",headerPacket.filename);

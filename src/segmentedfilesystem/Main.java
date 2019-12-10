@@ -12,7 +12,7 @@ public class Main {
         DatagramSocket socket = new DatagramSocket();
         HashMap<Integer,File> files = new HashMap<>();
         int filesRemaining = 3;
-        helloServer(socket,Integer.parseInt(args[0]));
+        helloServer(socket,6014);
 
         while (filesRemaining > 0) {
             byte[] buf = new byte[1028];
@@ -23,11 +23,9 @@ public class Main {
                 packet.addToFile(files.get((int) packet.fileID));
                 if (files.get((int) packet.fileID).fileComplete()){
                     filesRemaining --;
-                    //System.out.println(files.get((int) packet.fileID).filename);
                     files.remove((int) packet.fileID);
 
                 }
-                //files.get((int) packet.fileID).add(packet);
             } else {
                 files.put((int) packet.fileID,new File());
                 packet.addToFile(files.get((int) packet.fileID));

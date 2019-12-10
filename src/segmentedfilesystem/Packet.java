@@ -3,7 +3,6 @@ package segmentedfilesystem;
 import java.util.Arrays;
 
 public abstract class Packet {
-  byte statusByte;
   byte fileID;
   boolean isDataPacket;
 
@@ -22,7 +21,7 @@ public abstract class Packet {
           Arrays.copyOfRange(packetBuffer,2,packetBuffer.length),bufferLength);
       return headerPacket;
     }
-  };
+  }
 
   static boolean statusIsDataPacket(byte statusByte){
     return statusByte % 2 == 1;

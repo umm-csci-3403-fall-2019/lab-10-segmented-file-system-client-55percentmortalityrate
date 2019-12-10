@@ -1,7 +1,6 @@
 package segmentedfilesystem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class DataPacket extends Packet {
   int packetNumber;

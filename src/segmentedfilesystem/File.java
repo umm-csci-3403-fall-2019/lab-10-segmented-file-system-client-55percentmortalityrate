@@ -3,7 +3,9 @@ package segmentedfilesystem;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 public class File {
   HeaderPacket headerPacket;
@@ -17,9 +19,20 @@ public class File {
     System.out.println("Writing file " + filename);
     ArrayList<Byte> outputBuffer = new ArrayList<>();
     ArrayList<Integer> ints = new ArrayList<>();
-    for(int i = 0; i < numPackets; i++){
+    int headerZone = 6;
+    for(int i = 0; i < headerZone; i++){
       ints.add(i);
     }
+
+    ArrayList<Integer> ints2 = new ArrayList<>();
+    //Random random = new Random();
+    for(int i = headerZone; i < numPackets; i++){
+      //i = random.nextInt(numPackets-1);
+      ints2.add(i);
+    }
+    Collections.shuffle(ints2);
+    ints.addAll(ints2);
+
     for(int i = 0; i < numPackets; i++){
       outputBuffer.addAll(datapackets.get(ints.get(i)).getBoxedData());
     }

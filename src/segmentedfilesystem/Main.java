@@ -2,6 +2,7 @@ package segmentedfilesystem;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -18,7 +19,8 @@ public class Main {
             byte[] buf = new byte[1028];
             DatagramPacket recieved = new DatagramPacket(buf, buf.length);
             socket.receive(recieved);
-            Packet packet = Packet.makePacket(recieved.getData(),recieved.getLength());
+            byte[] buffer = Arrays.copyOfRange(recieved.getData(),0,recieved.getLength());
+            Packet packet = Packet.makePacket(buffer);
             if(files.containsKey((int) packet.fileID)){
                 packet.addToFile(files.get((int) packet.fileID));
                 if (files.get((int) packet.fileID).fileComplete()){

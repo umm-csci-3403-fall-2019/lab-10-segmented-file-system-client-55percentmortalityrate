@@ -10,16 +10,16 @@ public class FileTest {
 
     byte[] bytes = new byte[3];
     bytes[2] = 48; //make filename be "0"
-    HeaderPacket headerPacket = (HeaderPacket) Packet.makePacket(bytes,3);
+    HeaderPacket headerPacket = (HeaderPacket) Packet.makePacket(bytes);
     assertFalse(headerPacket.isDataPacket);
     byte[] buffer = new byte[5];
     buffer[0] = 1;
     //We set the byte at 0 to be 1 to say this is a data packet.
-    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer,5);
+    DataPacket dataPacket = (DataPacket) Packet.makePacket(buffer);
     assertTrue(dataPacket.isDataPacket);
     buffer[0] = 3; //set the byte to be 3 to make this be the final packet
     buffer[3] = 1; //set packet number to be 1
-    DataPacket finalPacket = (DataPacket) Packet.makePacket(buffer,5);
+    DataPacket finalPacket = (DataPacket) Packet.makePacket(buffer);
     assertTrue(finalPacket.isDataPacket);
     assertTrue(finalPacket.isLastPacket);
     File file = new File();

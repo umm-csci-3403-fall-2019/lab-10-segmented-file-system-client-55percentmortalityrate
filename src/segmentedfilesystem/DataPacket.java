@@ -8,13 +8,13 @@ public class DataPacket extends Packet {
   byte[] data;
   int dataBufferLength;
 
-  public DataPacket (byte statusByte, byte fileID,int packetNumber, byte[] packetBuffer,int bufferLength){
+  public DataPacket (byte statusByte, byte fileID,int packetNumber, byte[] packetBuffer){
     this.fileID = fileID;
     this.packetNumber = packetNumber;
     this.isLastPacket = statusByte % 4 == 3;
     this.isDataPacket = true;
     this.data = packetBuffer;
-    this.dataBufferLength = bufferLength-4;
+    this.dataBufferLength = packetBuffer.length;
   }
 
   public ArrayList<Byte> getBoxedData(){

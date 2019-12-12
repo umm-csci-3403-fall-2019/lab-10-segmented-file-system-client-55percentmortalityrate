@@ -3,10 +3,10 @@ package segmentedfilesystem;
 public class HeaderPacket extends Packet {
   String filename;
 
-  HeaderPacket(byte fileID, byte[] filenameBuffer,int bufferLength){
+  HeaderPacket(byte fileID, byte[] filenameBuffer){
     this.fileID = fileID;
     this.isDataPacket = false;
-    String filename = new String(filenameBuffer,0,bufferLength-2);
+    String filename = new String(filenameBuffer);
     this.filename = filename;
   }
 

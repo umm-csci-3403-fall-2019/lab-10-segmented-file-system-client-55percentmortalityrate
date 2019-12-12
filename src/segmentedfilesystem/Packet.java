@@ -6,21 +6,21 @@ public abstract class Packet {
   byte fileID;
   boolean isDataPacket;
 
-  public static Packet makePacket(byte[] packetBuffer, int bufferLength){
+  public static Packet makePacket(byte[] packetBuffer){
     byte statusByte = packetBuffer[0];
     byte fileID = packetBuffer[1];
     boolean isDataPacket = statusIsDataPacket(statusByte);
+    Packet packet;
 
     if (isDataPacket) {
-      DataPacket dataPacket = new DataPacket(statusByte,fileID,
-          (packetBuffer[2] & 0xFF) * 256 + (packetBuffer[3] & 0xFF),
-          Arrays.copyOfRange(packetBuffer,4,packetBuffer.length),bufferLength);
-      return dataPacket;
+      byte[] buffer = Arrays.copyOfRange(packetBuffer,4,packetBuffer.length);
+      int packetNum = (packetBuffer[2] & 0xFF) * 256 + (packetBuffer[3] & 0xFF);
+      packet = new DataPacket(statusByte,fileID, packetNum,buffer);
     } else {
-      HeaderPacket headerPacket = new HeaderPacket(fileID,
-          Arrays.copyOfRange(packetBuffer,2,packetBuffer.length),bufferLength);
-      return headerPacket;
+      byte[] buffer = Arrays.copyOfRange(packetBuffer,2,packetBuffer.length);
+      packet = new HeaderPacket(fileID, buffer);
     }
+    return packet;
   }
 
   static boolean statusIsDataPacket(byte statusByte){
